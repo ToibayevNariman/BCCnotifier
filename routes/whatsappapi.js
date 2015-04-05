@@ -19,7 +19,12 @@ router.get('/', function (req, res, next) {
         return;
     }
 
-    res.json(exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup.config --send '+req.query.phone+' "'+req.query.text+'"'));
+    var response = {
+        success: true,
+        yowsup: exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup.config --send '+req.query.phone+' "'+req.query.text+'"')
+    }
+
+    res.json(response);
 });
 
 module.exports = router;
