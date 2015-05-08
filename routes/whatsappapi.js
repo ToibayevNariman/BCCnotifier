@@ -1,5 +1,5 @@
 var express = require('express');
-require('shelljs/global');
+var shelljs = require('shelljs');
 var router = express.Router();
 
 /* GET users listing. */
@@ -18,10 +18,10 @@ router.get('/', function (req, res, next) {
         res.json({ success: false, reason: "Incorrect params" });
         return;
     }
-
+    
     var response = {
         success: true,
-        yowsup: exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup.config --send '+req.query.phone+' "'+req.query.text+'"')
+        yowsup: shelljs.exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup.config --send '+req.query.phone+' "'+req.query.text+'"')
     }
 
     res.json(response);
