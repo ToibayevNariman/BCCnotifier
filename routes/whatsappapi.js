@@ -9,9 +9,14 @@ router.get('/', function (req, res, next) {
         return;
     }
 
-    if(req.query.phone === undefined || req.query.phone.length !== 11){
+    if(req.query.phone === undefined){
         res.json({ success: false, reason: "Incorrect phone" });
         return;
+    }
+
+    if((req.query.phone.match('\\+7') || []).length != 0){
+        res.json({ success: false, reason: "phone number should not contain +7 or 8" });
+	return;
     }
 
     if(req.query.text === undefined){
@@ -21,10 +26,10 @@ router.get('/', function (req, res, next) {
     
     var response = {
         success: true,
-        yowsup: shelljs.exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup.config --send '+req.query.phone+' "'+req.query.text+'"')
+        yowsup: shelljs.exec('yowsup-cli demos --config /home/bcc/yowsup/yowsup2.config --send '+req.query.phone+' "'+req.query.text+'"')
     }
 
-    res.json(response);
+    res.json({ success:true });
 });
 
 module.exports = router;
